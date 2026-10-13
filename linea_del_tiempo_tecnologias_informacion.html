@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Línea del tiempo | Historia de las Tecnologías de la Información</title>
+<style>
+:root{
+  --bg:#f4f1ec; --bg2:#e9e4dc; --card:#ffffff; --card2:#f8f6f2;
+  --text:#34312d; --muted:#746f68; --accent:#8a8175; --accent2:#b5aaa0;
+  --gold:#a8977d; --line:rgba(138,129,117,.35); --ok:#728b75;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#f7f5f1,#ece7df);color:var(--text);line-height:1.55}
+a{color:#8be0ff}
+.hero{min-height:86vh;display:grid;place-items:center;padding:70px 20px 40px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(7,17,31,.86),rgba(7,17,31,.35)),url("https://www.timeforkids.com/wp-content/uploads/2017/08/activity_600x620.jpg?w=600") center/cover;opacity:.18}
+.hero>*{position:relative;z-index:1}
+.hero-box{max-width:1050px;text-align:center}
+.badge{display:inline-block;padding:8px 16px;border:1px solid rgba(53,198,255,.55);border-radius:999px;color:#5f5952;background:rgba(16,36,58,.65);backdrop-filter:blur(10px)}
+h1{font-size:clamp(2.4rem,7vw,5.8rem);line-height:1.02;margin:20px 0;background:linear-gradient(90deg,#fff,#83dfff,#c1a9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:820px;margin:0 auto 24px;color:#615b54;font-size:1.08rem}
+.stats{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:28px 0}
+.stat{background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.12);padding:14px 22px;border-radius:18px;min-width:150px}
+.stat b{display:block;font-size:1.35rem;color:var(--accent)}
+.btn{display:inline-block;border:0;background:linear-gradient(90deg,var(--accent),var(--accent2));color:white;padding:13px 22px;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 10px 30px rgba(53,198,255,.2)}
+nav{position:sticky;top:0;z-index:20;background:rgba(248,246,242,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(52,49,45,.10);padding:10px 16px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+nav a{color:var(--text);text-decoration:none;padding:7px 12px;border-radius:10px;font-size:.92rem}
+nav a:hover{background:rgba(53,198,255,.12)}
+main{max-width:1180px;margin:auto;padding:45px 20px 90px}
+.section-title{font-size:clamp(1.7rem,4vw,3rem);margin:10px 0 12px}
+.lead{color:var(--muted);max-width:900px}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:25px 0 35px}
+.filter{cursor:pointer;background:#fffdf9;border:1px solid rgba(255,255,255,.12);color:var(--text);padding:9px 13px;border-radius:999px}
+.filter.active,.filter:hover{background:#e7e1d9;border-color:var(--accent)}
+.search{width:min(100%,420px);padding:12px 15px;border-radius:14px;border:1px solid rgba(255,255,255,.13);background:#fff;color:#34312d}
+.timeline{position:relative;margin:30px auto}
+.timeline::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:4px;background:linear-gradient(var(--accent),var(--accent2),var(--gold));transform:translateX(-50%);border-radius:99px}
+.item{position:relative;width:50%;padding:18px 48px 18px 0}
+.item:nth-child(even){margin-left:50%;padding:18px 0 18px 48px}
+.dot{position:absolute;top:37px;width:18px;height:18px;background:var(--accent);border:4px solid var(--bg);border-radius:50%;box-shadow:0 0 0 5px rgba(53,198,255,.18)}
+.item:nth-child(odd) .dot{right:-9px}.item:nth-child(even) .dot{left:-9px}
+.card{background:linear-gradient(145deg,#ffffff,#f6f3ee);border:1px solid rgba(52,49,45,.10);border-radius:22px;padding:22px;box-shadow:0 12px 28px rgba(80,70,60,.10);transition:.25s}
+.card:hover{transform:translateY(-5px);border-color:rgba(53,198,255,.42)}
+.year{font-size:.82rem;font-weight:800;letter-spacing:.12em;color:var(--gold);text-transform:uppercase}
+.card h3{margin:7px 0 8px;font-size:1.28rem}
+.card p{margin:0;color:#625c55}
+.tag{display:inline-block;margin-top:13px;padding:4px 9px;border-radius:999px;background:#ece7df;color:#6d6257;font-size:.78rem}
+.insight{margin-top:12px;padding:10px 12px;border-left:3px solid var(--accent);background:#f1ede7;border-radius:0 10px 10px 0;font-size:.92rem;color:#5e5750}
+.overview{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;margin:40px 0;padding:26px;border-radius:26px;background:linear-gradient(135deg,#e8e1d8,#f7f4ef);border:1px solid rgba(255,255,255,.08)}
+.overview img{width:100%;border-radius:18px;max-height:430px;object-fit:cover}
+.image-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0 8px}.image-gallery img{width:100%;height:190px;object-fit:cover;border-radius:18px;filter:grayscale(25%);box-shadow:0 10px 24px rgba(80,70,60,.12)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.mini{background:#fff;border:1px solid rgba(255,255,255,.08);padding:20px;border-radius:18px}
+.mini b{color:var(--accent)}
+.quiz{margin-top:45px;background:linear-gradient(135deg,#e7e0d7,#f6f2ec);padding:28px;border-radius:25px}
+.q{padding:14px 0;border-bottom:1px solid rgba(52,49,45,.10)}
+.q button{margin:6px 5px 0 0;padding:8px 10px;background:#fff;color:#34312d;border:1px solid rgba(255,255,255,.12);border-radius:10px;cursor:pointer}
+.q button:hover{border-color:var(--accent)}
+#score{font-weight:800;color:var(--gold);margin-top:14px}
+.sources{margin-top:45px;padding:24px;border-radius:22px;background:#fff;border:1px solid rgba(255,255,255,.08)}
+.sources li{margin:9px 0;color:var(--muted)}
+footer{text-align:center;color:#829bb0;padding:35px 20px;border-top:1px solid rgba(255,255,255,.08)}
+.hidden{display:none!important}
+@media(max-width:760px){
+ .timeline::before{left:18px}
+ .item,.item:nth-child(even){width:100%;margin-left:0;padding:14px 0 14px 45px}
+ .item:nth-child(odd) .dot,.item:nth-child(even) .dot{left:9px;right:auto}
+ .overview{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.image-gallery{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<section class="hero" id="inicio">
+  <div class="hero-box">
+    <span class="badge">Investigación interactiva · Historia de las TI</span>
+    <h1>De la escritura a la Inteligencia Artificial</h1>
+    <p>Una línea del tiempo didáctica sobre cómo la humanidad pasó de registrar información en tablillas a conectar al planeta mediante redes, computadoras, dispositivos móviles y sistemas inteligentes.</p>
+    <div class="stats">
+      <div class="stat"><b>≈ 3500 a. C.</b><span>Inicio del recorrido</span></div>
+      <div class="stat"><b>+ 5,000 años</b><span>De evolución informacional</span></div>
+      <div class="stat"><b>3 grandes etapas</b><span>Registro · Comunicación · Digitalización</span></div>
+    </div>
+    <a class="btn" href="#timeline">Explorar la línea del tiempo ↓</a>
+  </div>
+</section>
+
+<nav>
+<a href="#introduccion">Introducción</a><a href="#timeline">Línea del tiempo</a>
+<a href="#etapas">Etapas</a><a href="#quiz">Mini quiz</a><a href="#fuentes">Fuentes</a>
+</nav>
+
+<main>
+<section id="introduccion">
+<h2 class="section-title">¿Qué son las Tecnologías de la Información?</h2>
+<p class="lead">Las Tecnologías de la Información (TI) son herramientas, sistemas y procesos utilizados para crear, registrar, almacenar, procesar, transmitir y recuperar información. Su historia no comienza con Internet: empieza cuando las sociedades desarrollaron medios para conservar conocimientos más allá de la memoria humana.</p>
+<div class="overview">
+  <div>
+    <h2>La gran transformación</h2>
+    <p>La evolución puede entenderse como una cadena: <b>escritura → soportes físicos → imprenta → electricidad → telecomunicaciones → computación → redes → Web → movilidad → nube e IA</b>.</p>
+    <p>El material base proporcionado para esta actividad reúne hitos como la escritura, el papel, la imprenta, el telégrafo, el teléfono, la radio, ENIAC, ARPANET, el microprocesador, la World Wide Web, Wi‑Fi, smartphones y tecnologías recientes.</p>
+    <div class="insight"><b>Idea clave:</b> cada innovación redujo una barrera: primero la memoria, después la distancia, luego el tiempo y finalmente la capacidad de procesar grandes cantidades de información.</div>
+  </div>
+  <img src="https://www.timeforkids.com/wp-content/uploads/2017/08/activity_600x620.jpg?w=600" alt="Ilustración de inventos que transformaron la comunicación">
+</div>
+<div class="image-gallery">
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Cuneiform_script2.jpg" alt="Escritura cuneiforme">
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Gutenberg_Bible%2C_Lenox_Copy%2C_New_York_Public_Library%2C_2009.jpg" alt="Imprenta y libros">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/ENIAC-changing_a_tube.jpg" alt="Computadora ENIAC">
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/80/First_Web_Server.jpg" alt="Primer servidor web">
+</div>
+</section>
+
+<section id="timeline">
+<h2 class="section-title">Línea del tiempo interactiva</h2>
+<p class="lead">Usa los filtros para recorrer el proceso por etapas. La selección prioriza los acontecimientos tecnológicos del material de clase y los amplía con contexto histórico para explicar por qué fueron importantes.</p>
+<div class="controls">
+<button class="filter active" data-filter="all">Todos</button>
+<button class="filter" data-filter="registro">Registro y conocimiento</button>
+<button class="filter" data-filter="comunicacion">Comunicación</button>
+<button class="filter" data-filter="computacion">Computación</button>
+<button class="filter" data-filter="digital">Era digital</button>
+<input class="search" id="search" placeholder="Buscar un invento o año...">
+</div>
+
+<div class="timeline" id="timelineList">
+<article class="item" data-cat="registro"><span class="dot"></span><div class="card"><div class="year">≈ 3500 a. C.</div><h3>Invención de la escritura en Mesopotamia</h3><p>La escritura permitió conservar información fuera de la memoria humana y registrar intercambios, leyes, inventarios y acontecimientos.</p><div class="insight"><b>Impacto:</b> nace la posibilidad de acumular conocimiento entre generaciones.</div><span class="tag">Registro</span></div></article>
+
+<article class="item" data-cat="registro"><span class="dot"></span><div class="card"><div class="year">3000 a. C.</div><h3>Tablillas de arcilla</h3><p>Se consolidan como uno de los primeros soportes físicos masivos para guardar registros y datos.</p><div class="insight"><b>Impacto:</b> la información adquiere un soporte material durable.</div><span class="tag">Almacenamiento</span></div></article>
+
+<article class="item" data-cat="registro computacion"><span class="dot"></span><div class="card"><div class="year">≈ 2300 a. C.</div><h3>El ábaco</h3><p>Las civilizaciones antiguas desarrollaron instrumentos de cálculo para procesar cantidades con mayor rapidez y precisión.</p><div class="insight"><b>Impacto:</b> anticipa la idea de usar herramientas para procesar datos.</div><span class="tag">Procesamiento</span></div></article>
+
+<article class="item" data-cat="registro"><span class="dot"></span><div class="card"><div class="year">105 d. C.</div><h3>El papel en China</h3><p>La fabricación de papel se asocia tradicionalmente con Cai Lun. Este soporte facilitó la reproducción, el transporte y la conservación de textos.</p><div class="insight"><b>Impacto:</b> la información se vuelve más accesible que en soportes pesados o costosos.</div><span class="tag">Soporte</span></div></article>
+
+<article class="item" data-cat="registro"><span class="dot"></span><div class="card"><div class="year">1440–1450</div><h3>La imprenta de tipos móviles</h3><p>Johannes Gutenberg perfeccionó un sistema que combinó tipos móviles metálicos, tinta y prensa para reproducir textos a gran escala.</p><div class="insight"><b>Impacto:</b> acelera la difusión del conocimiento y reduce el costo relativo de los libros.</div><span class="tag">Difusión masiva</span></div></article>
+
+<article class="item" data-cat="computacion"><span class="dot"></span><div class="card"><div class="year">1671</div><h3>Máquina multiplicadora de Leibniz</h3><p>Gottfried Wilhelm Leibniz desarrolló una calculadora mecánica capaz de apoyar operaciones aritméticas complejas.</p><div class="insight"><b>Impacto:</b> muestra que el cálculo puede mecanizarse.</div><span class="tag">Automatización</span></div></article>
+
+<article class="item" data-cat="comunicacion"><span class="dot"></span><div class="card"><div class="year">1836–1844</div><h3>El telégrafo eléctrico</h3><p>Los sistemas telegráficos permitieron enviar señales codificadas por cables a grandes distancias. Samuel Morse popularizó un sistema decisivo para la comunicación moderna.</p><div class="insight"><b>Impacto:</b> por primera vez los mensajes viajan mucho más rápido que las personas.</div><span class="tag">Electricidad</span></div></article>
+
+<article class="item" data-cat="computacion"><span class="dot"></span><div class="card"><div class="year">1837</div><h3>La Máquina Analítica</h3><p>Charles Babbage diseñó teóricamente una máquina programable de propósito general con conceptos comparables a memoria, unidad de procesamiento y programación.</p><div class="insight"><b>Impacto:</b> es uno de los antecedentes conceptuales de la computadora moderna.</div><span class="tag">Computación</span></div></article>
+
+<article class="item" data-cat="comunicacion"><span class="dot"></span><div class="card"><div class="year">1876</div><h3>El teléfono</h3><p>La transmisión eléctrica de la voz abrió una nueva forma de comunicación inmediata entre personas separadas por la distancia.</p><div class="insight"><b>Impacto:</b> la comunicación se vuelve directa, oral y casi instantánea.</div><span class="tag">Voz</span></div></article>
+
+<article class="item" data-cat="comunicacion"><span class="dot"></span><div class="card"><div class="year">1895</div><h3>Primeras transmisiones inalámbricas de radio</h3><p>Los experimentos de Guglielmo Marconi demostraron la posibilidad de transmitir señales sin cables a distancia.</p><div class="insight"><b>Impacto:</b> comienza la comunicación inalámbrica moderna.</div><span class="tag">Inalámbrico</span></div></article>
+
+<article class="item" data-cat="comunicacion"><span class="dot"></span><div class="card"><div class="year">1927</div><h3>Primeras transmisiones de televisión</h3><p>La transmisión de imágenes y sonido amplió la comunicación masiva y preparó el camino para la cultura audiovisual.</p><div class="insight"><b>Impacto:</b> la información incorpora una dimensión visual de gran alcance.</div><span class="tag">Medios</span></div></article>
+
+<article class="item" data-cat="comunicacion"><span class="dot"></span><div class="card"><div class="year">1939</div><h3>Televisión a color: aportación de Guillermo González Camarena</h3><p>El inventor mexicano desarrolló un sistema para la transmisión de televisión en color, destacando a México en la historia tecnológica audiovisual.</p><div class="insight"><b>Impacto:</b> mejora la riqueza visual de la comunicación electrónica.</div><span class="tag">Innovación mexicana</span></div></article>
+
+<article class="item" data-cat="computacion"><span class="dot"></span><div class="card"><div class="year">1945</div><h3>Memex: la idea de información conectada</h3><p>Vannevar Bush imaginó un sistema de gestión documental basado en asociaciones entre documentos, precursor conceptual del hipertexto.</p><div class="insight"><b>Impacto:</b> anticipa la navegación no lineal que después caracterizaría a la Web.</div><span class="tag">Hipertexto</span></div></article>
+
+<article class="item" data-cat="computacion"><span class="dot"></span><div class="card"><div class="year">1946</div><h3>ENIAC</h3><p>Se presenta una de las primeras computadoras electrónicas de propósito general. Su enorme tamaño contrasta con la potencia disponible hoy en dispositivos personales.</p><div class="insight"><b>Impacto:</b> acelera el desarrollo de la computación electrónica.</div><span class="tag">Computadora</span></div></article>
+
+<article class="item" data-cat="computacion"><span class="dot"></span><div class="card"><div class="year">1956</div><h3>Nacimiento formal de la Inteligencia Artificial</h3><p>La investigación moderna de la IA se consolidó como campo académico durante la década de 1950; Logic Theorist es citado entre los primeros programas de IA.</p><div class="insight"><b>Impacto:</b> surge la aspiración de construir sistemas capaces de resolver problemas de forma inteligente.</div><span class="tag">IA</span></div></article>
+
+<article class="item" data-cat="computacion"><span class="dot"></span><div class="card"><div class="year">1958</div><h3>El circuito integrado</h3><p>La integración de múltiples componentes electrónicos en una sola pieza de material semiconductor abrió la puerta a dispositivos cada vez más pequeños y potentes.</p><div class="insight"><b>Impacto:</b> miniaturización y reducción de costos.</div><span class="tag">Microelectrónica</span></div></article>
+
+<article class="item" data-cat="comunicacion digital"><span class="dot"></span><div class="card"><div class="year">1962</div><h3>Telstar y las comunicaciones por satélite</h3><p>Telstar ayudó a demostrar la retransmisión activa de señales y las transmisiones televisivas transatlánticas.</p><div class="insight"><b>Impacto:</b> la comunicación adquiere una escala verdaderamente global.</div><span class="tag">Satélites</span></div></article>
+
+<article class="item" data-cat="digital computacion"><span class="dot"></span><div class="card"><div class="year">1969</div><h3>Nacimiento de ARPANET</h3><p>Se conectaron computadoras en una red experimental que se convirtió en uno de los antecedentes fundamentales de Internet.</p><div class="insight"><b>Impacto:</b> comienza la transición de computadoras aisladas a computadoras conectadas.</div><span class="tag">Redes</span></div></article>
+
+<article class="item" data-cat="computacion digital"><span class="dot"></span><div class="card"><div class="year">1971</div><h3>Intel 4004: el microprocesador comercial</h3><p>La integración de funciones de procesamiento en un chip fue decisiva para reducir el tamaño de las computadoras y avanzar hacia la informática personal.</p><div class="insight"><b>Impacto:</b> el “cerebro” electrónico se hace diminuto.</div><span class="tag">Microprocesador</span></div></article>
+
+<article class="item" data-cat="digital"><span class="dot"></span><div class="card"><div class="year">1971</div><h3>Primer correo electrónico</h3><p>Ray Tomlinson envió un mensaje entre equipos conectados a ARPANET y popularizó el uso de la arroba para separar usuario y equipo.</p><div class="insight"><b>Impacto:</b> la mensajería digital se convierte en una aplicación cotidiana.</div><span class="tag">Correo electrónico</span></div></article>
+
+<article class="item" data-cat="digital"><span class="dot"></span><div class="card"><div class="year">1989–1991</div><h3>Nace la World Wide Web</h3><p>Tim Berners-Lee propuso un sistema de información enlazada en el CERN; posteriormente desarrolló el primer servidor y navegador web, y la tecnología se abrió al público.</p><div class="insight"><b>Impacto:</b> Internet deja de ser solo infraestructura y se vuelve navegable mediante páginas y enlaces.</div><span class="tag">WWW · HTML · HTTP</span></div></article>
+
+<article class="item" data-cat="digital"><span class="dot"></span><div class="card"><div class="year">1994–1999</div><h3>Bluetooth y Wi‑Fi</h3><p>Bluetooth impulsó conexiones de corto alcance entre dispositivos; Wi‑Fi popularizó el acceso inalámbrico a redes locales e Internet.</p><div class="insight"><b>Impacto:</b> conectividad sin cables en la vida cotidiana.</div><span class="tag">Conectividad</span></div></article>
+
+<article class="item" data-cat="digital"><span class="dot"></span><div class="card"><div class="year">2000</div><h3>Memorias USB y portabilidad de datos</h3><p>Los dispositivos de almacenamiento flash facilitaron el transporte de archivos y sustituyeron progresivamente soportes magnéticos tradicionales.</p><div class="insight"><b>Impacto:</b> llevar información físicamente se vuelve simple y compacto.</div><span class="tag">Almacenamiento</span></div></article>
+
+<article class="item" data-cat="digital"><span class="dot"></span><div class="card"><div class="year">2004</div><h3>Redes sociales y nueva cultura digital</h3><p>Plataformas sociales aceleraron la publicación de contenido por usuarios y transformaron la forma de relacionarse, informarse y participar en comunidades.</p><div class="insight"><b>Impacto:</b> las personas pasan de ser principalmente receptoras a creadoras y distribuidoras de información.</div><span class="tag">Redes sociales</span></div></article>
+
+<article class="item" data-cat="digital"><span class="dot"></span><div class="card"><div class="year">2007</div><h3>El iPhone y la consolidación del smartphone moderno</h3><p>Los teléfonos inteligentes con pantalla multitáctil integraron comunicación, navegación, cámara, aplicaciones y acceso permanente a Internet.</p><div class="insight"><b>Impacto:</b> la computadora personal pasa a caber en el bolsillo.</div><span class="tag">Movilidad</span></div></article>
+
+<article class="item" data-cat="digital"><span class="dot"></span><div class="card"><div class="year">2010–2015</div><h3>Nube, Big Data, movilidad e IA aplicada</h3><p>La computación en la nube permitió almacenar y procesar información a distancia; los dispositivos móviles y la automatización redefinieron el trabajo y la colaboración.</p><div class="insight"><b>Impacto:</b> acceso ubicuo y colaboración en tiempo real.</div><span class="tag">Cloud Computing</span></div></article>
+
+<article class="item" data-cat="digital"><span class="dot"></span><div class="card"><div class="year">2019–2022</div><h3>Despliegue de redes 5G</h3><p>Las redes móviles de nueva generación ampliaron la capacidad, velocidad y respuesta de las comunicaciones inalámbricas; su despliegue comercial avanzó en distintos países y posteriormente en México.</p><div class="insight"><b>Impacto:</b> infraestructura para mayor conectividad y nuevos servicios digitales.</div><span class="tag">5G</span></div></article>
+
+<article class="item" data-cat="digital computacion"><span class="dot"></span><div class="card"><div class="year">Actualidad</div><h3>La era de la IA generativa y los sistemas inteligentes</h3><p>La IA actual procesa lenguaje, imágenes, código y grandes volúmenes de datos. Se utiliza como apoyo para crear, analizar, automatizar y descubrir nuevas relaciones.</p><div class="insight"><b>Pregunta para el futuro:</b> ¿cómo equilibrar innovación, privacidad, seguridad, empleo y acceso equitativo?</div><span class="tag">Inteligencia Artificial</span></div></article>
+</div>
+</section>
+
+<section id="etapas">
+<h2 class="section-title">Las 3 grandes etapas</h2>
+<div class="grid">
+<div class="mini"><b>1. Registrar</b><h3>Memoria externa</h3><p>Escritura, tablillas, papel e imprenta permitieron conservar y multiplicar el conocimiento.</p></div>
+<div class="mini"><b>2. Comunicar</b><h3>Vencer la distancia</h3><p>Telégrafo, teléfono, radio, televisión y satélites redujeron el tiempo necesario para intercambiar información.</p></div>
+<div class="mini"><b>3. Digitalizar y conectar</b><h3>Procesar y compartir</h3><p>Computadoras, microprocesadores, Internet, Web, smartphones, nube e IA integraron información, comunicación y automatización.</p></div>
+</div>
+</section>
+
+<section class="quiz" id="quiz">
+<h2>🧠 Mini quiz</h2>
+<p>Comprueba rápidamente lo aprendido.</p>
+<div class="q"><b>1. ¿Qué innovación permitió almacenar información fuera de la memoria humana?</b><br>
+<button onclick="answer(this,false)">El teléfono</button><button onclick="answer(this,true)">La escritura</button><button onclick="answer(this,false)">Wi‑Fi</button></div>
+<div class="q"><b>2. ¿Qué red es uno de los antecedentes fundamentales de Internet?</b><br>
+<button onclick="answer(this,true)">ARPANET</button><button onclick="answer(this,false)">ENIAC</button><button onclick="answer(this,false)">Memex</button></div>
+<div class="q"><b>3. ¿Quién propuso la World Wide Web?</b><br>
+<button onclick="answer(this,false)">Leibniz</button><button onclick="answer(this,true)">Tim Berners-Lee</button><button onclick="answer(this,false)">Marconi</button></div>
+<div id="score">Puntuación: 0</div>
+</section>
+
+<section class="sources" id="fuentes">
+<h2>Fuentes y base de la investigación</h2>
+<ul>
+<li><b>Material de clase proporcionado:</b> “Historia de las Tecnologías de la Información”. Se utilizaron sus principales hitos tecnológicos como estructura de la línea del tiempo.</li>
+<li><a href="https://www.internetsociety.org/es/Internet/history-Internet/brief-history-Internet/" target="_blank">Internet Society — Breve historia de Internet</a>.</li>
+<li><a href="https://www.itu.int/es/history/Pages/ITUsHistory.aspx" target="_blank">Unión Internacional de Telecomunicaciones — Historia de las telecomunicaciones</a>.</li>
+<li><a href="https://www.computerhistory.org/timeline/networking-the-web/" target="_blank">Computer History Museum — Networking & the Web</a>.</li>
+<li><a href="https://www.cfr.org/education/learn/timelines/history-communications" target="_blank">Council on Foreign Relations — Two Hundred Years of Global Communications</a>.</li>
+</ul>
+<p class="lead"><b>Nota metodológica:</b> se priorizaron los acontecimientos relacionados directamente con las tecnologías de la información y se omitieron de la cronología principal los registros personales de nacimientos incluidos en el material original, para mantener el enfoque temático.</p>
+</section>
+</main>
+
+<footer>Historia de las Tecnologías de la Información · Línea del tiempo didáctica en HTML</footer>
+<script>
+let score=0, answered=new WeakSet();
+function answer(btn,correct){
+  const q=btn.closest('.q');
+  if(answered.has(q)) return;
+  answered.add(q);
+  [...q.querySelectorAll('button')].forEach(b=>b.disabled=true);
+  btn.style.borderColor=correct?'#54e39b':'#ff6b7a';
+  btn.style.background=correct?'rgba(84,227,155,.18)':'rgba(255,107,122,.16)';
+  if(correct) score++;
+  document.getElementById('score').textContent='Puntuación: '+score+' / 3';
+}
+const filters=document.querySelectorAll('.filter');
+filters.forEach(f=>f.addEventListener('click',()=>{
+ filters.forEach(x=>x.classList.remove('active'));f.classList.add('active');
+ const cat=f.dataset.filter;
+ document.querySelectorAll('.item').forEach(item=>{
+  item.classList.toggle('hidden',cat!=='all'&&!item.dataset.cat.includes(cat));
+ });
+}));
+document.getElementById('search').addEventListener('input',e=>{
+ const term=e.target.value.toLowerCase().trim();
+ document.querySelectorAll('.item').forEach(item=>{
+   item.classList.toggle('hidden',term && !item.innerText.toLowerCase().includes(term));
+ });
+});
+</script>
+</body>
+</html>
